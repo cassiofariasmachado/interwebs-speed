@@ -1,0 +1,4 @@
+SHELL=/bin/bash
+PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin
+
+*/5 * * * * /usr/local/bin/python /app/analize_internet_speed.py
