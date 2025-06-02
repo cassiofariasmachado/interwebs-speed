@@ -1,0 +1,21 @@
+services:
+  interwebs-speed:
+    image: interwebs-speed
+    container_name: interwebs-speed
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: analyze
+    volumes:
+      - ./data:/data
+    environment:
+      - CSV_FILES_PATH=${CSV_FILES_PATH}
+      - INTERNET_SPEED=${INTERNET_SPEED}
+      - EXPECTED_DOWNLOAD=${EXPECTED_DOWNLOAD}
+      - EXPECTED_UPLOAD=${EXPECTED_DOWNLOAD}
+      - SMTP_HOST=${SMTP_HOST}
+      - SMTP_PORT=${SMTP_PORT}
+      - SMTP_USERNAME=${SMTP_USERNAME}
+      - SMTP_PASSWORD=${SMTP_PASSWORD}
+      - ALERT_SENDER_MAIL=${ALERT_SENDER_MAIL}
+      - ALERT_RECEIVER_MAIL=${ALERT_RECEIVER_MAIL}

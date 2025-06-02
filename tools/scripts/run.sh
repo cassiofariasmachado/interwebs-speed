@@ -1,17 +1,10 @@
 #!/bin/bash
 
-DOCKER_TAG='interwebs-speed'
-
 echo '🛑 remove service'
-docker stop $DOCKER_TAG
-docker rm $DOCKER_TAG
+docker compose down -v
 
 echo '🔨 build service'
-docker build -t $DOCKER_TAG .
+docker compose build
 
 echo '✅ run service'
-docker run -d \
-    -v ./data:/data \
-    --name $DOCKER_TAG \
-    $DOCKER_TAG \
-    analyze
+docker compose up -d
