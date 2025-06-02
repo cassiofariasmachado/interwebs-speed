@@ -1,14 +1,17 @@
+#!/bin/bash
+
 DOCKER_TAG='interwebs-speed'
 
-echo 'Step 1: Remove service'
+echo '🛑 remove service'
 docker stop $DOCKER_TAG
 docker rm $DOCKER_TAG
 
-echo 'Step 1: Build new service version'
+echo '🔨 build service'
 docker build -t $DOCKER_TAG .
 
-echo 'Step 2: Run service'
+echo '✅ run service'
 docker run -d \
-    -v /interwebs-speed:/app/csv \
+    -v ./data:/data \
     --name $DOCKER_TAG \
-    $DOCKER_TAG
+    $DOCKER_TAG \
+    analyze
