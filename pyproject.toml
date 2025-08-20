@@ -15,7 +15,6 @@ dependencies = [
 
 [tool.poetry]
 packages = [{include = "interwebs_speed", from = "src"}]
-package-mode = false
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^8.3.5"
