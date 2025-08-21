@@ -3,7 +3,7 @@ import typer
 
 from typing import Optional
 
-from interwebs_speed.services import analisys_service
+from interwebs_speed.services import analisys_service, summary_service
 
 app = typer.Typer()
 
@@ -17,6 +17,11 @@ def _version_callback(value: bool) -> None:
 @app.command(name="analyze")
 def analize_command() -> None:
     analisys_service.analyze()
+
+
+@app.command(name="summary")
+def summary_command() -> None:
+    summary_service.send_monthly_summary()
 
 
 @app.callback()

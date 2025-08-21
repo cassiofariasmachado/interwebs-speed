@@ -3,7 +3,7 @@ from email.mime.text import MIMEText
 import smtplib
 
 
-def send_email(config: dict, subject: str, message: str):
+def send_email(config: dict, subject: str, message: str, subtype: str = "plain"):
     host = config.get('smtp_host')
     port = config.get('smtp_port')
 
@@ -13,20 +13,20 @@ def send_email(config: dict, subject: str, message: str):
     sender = config.get('alert_sender_mail')
     receiver = config.get('alert_receiver_mail')
 
-    email = create_email(subject, message, sender, receiver)
+    email = create_email(subject, message, sender, receiver, subtype)
 
     with smtplib.SMTP_SSL(host, port) as server:
         server.login(username, password)
         server.sendmail(sender, receiver, email.as_string())
 
 
-def create_email(subject: str, message: str, sender: str, receiver: str) -> MIMEMultipart:
+def create_email(subject: str, message: str, sender: str, receiver: str, subtype: str = "plain") -> MIMEMultipart:
     mail = MIMEMultipart()
 
     mail["From"] = sender
     mail["To"] = receiver
     mail["Subject"] = subject
 
-    mail.attach(MIMEText(message, "plain"))
+    mail.attach(MIMEText(message, subtype))
 
     return mail

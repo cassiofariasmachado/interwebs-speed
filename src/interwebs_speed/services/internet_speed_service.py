@@ -4,7 +4,7 @@ from interwebs_speed.core.analisys import Analysis
 
 
 def get_internet_speed() -> Analysis:
-    s = speedtest.Speedtest()
+    s = speedtest.Speedtest(secure=True)
 
     s.get_servers()
     s.get_best_server()
