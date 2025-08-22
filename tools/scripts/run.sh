@@ -1,10 +1,10 @@
 #!/bin/bash
 
-echo '🛑 remove service'
+echo "🛑 remove service"
 docker compose down -v
 
-echo '🔨 build service'
+echo "🔨 build service"
 docker compose build
 
-echo '✅ run service'
+echo "✅ run service"
 docker compose up -d

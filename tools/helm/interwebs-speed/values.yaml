@@ -1,0 +1,38 @@
+replicaCount: 1
+
+image:
+  repository: cassiofariasmachado/interwebs-speed
+  pullPolicy: IfNotPresent
+  # Overrides the image tag whose default is the chart appVersion.
+  tag: "latest"
+
+cronjobs:
+  monthly-summary:
+    enabled: true
+    # schedule: "*/1 * * * *" # Every minute
+    schedule: "0 0 1 * *" # Every first day of the month at midnight (application should process previous month's data)
+    command: ["poetry", "run", "python", "-m", "interwebs_speed", "summary"]
+  hourly-analysis:
+    enabled: true
+    # schedule: "*/1 * * * *" # Every minute
+    schedule: "0 * * * *" # At minute 0 past every hour
+    command: ["poetry", "run", "python", "-m", "interwebs_speed", "analyze"]
+
+persistence:
+  enabled: true
+  size: 0.5Gi
+  storageClassName: "standard" # Use default if empty, or specify a storage class
+
+configs:
+  CSV_FILES_PATH: "./data"
+  INTERNET_SPEED: 680
+  EXPECTED_DOWNLOAD: 544
+  EXPECTED_UPLOAD: 350
+  SMTP_HOST: smtp.gmail.com
+  SMTP_PORT: 465
+  ALERT_SENDER_MAIL: ""
+  ALERT_RECEIVER_MAIL: ""
+
+secrets:
+  SMTP_USERNAME: ""
+  SMTP_PASSWORD: ""

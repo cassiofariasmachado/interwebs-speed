@@ -1,0 +1,38 @@
+{{- range $name, $cronjob := .Values.cronjobs }}
+{{- if $cronjob.enabled }}
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: {{ include "interwebs-speed.fullname" $ }}-{{ $name }}
+  labels:
+    {{- include "interwebs-speed.labels" $ | nindent 4 }}
+spec:
+  schedule: {{ $cronjob.schedule | quote }}
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          labels:
+            {{- include "interwebs-speed.selectorLabels" $ | nindent 12 }}
+        spec:
+          restartPolicy: OnFailure
+          containers:
+            - name: {{ $.Chart.Name }}-{{ $name }}
+              image: "{{ $.Values.image.repository }}:{{ $.Values.image.tag | default $.Chart.AppVersion }}"
+              imagePullPolicy: {{ $.Values.image.pullPolicy }}
+              command: {{ toYaml $cronjob.command | nindent 14 }}
+              volumeMounts:
+                - name: data-volume
+                  mountPath: /app/data
+              envFrom:
+                - secretRef:
+                    name: {{ include "interwebs-speed.fullname" $ }}-secrets
+                - configMapRef:
+                    name: {{ include "interwebs-speed.fullname" $ }}-configmap
+          volumes:
+            - name: data-volume
+              persistentVolumeClaim:
+                claimName: {{ include "interwebs-speed.fullname" $ }}-data
+{{- end }}
+{{- end }}

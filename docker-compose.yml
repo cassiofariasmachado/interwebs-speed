@@ -7,7 +7,7 @@ services:
       dockerfile: Dockerfile
     command: analyze
     volumes:
-      - ./data:/data
+      - ./data:/app/data
     environment:
       - CSV_FILES_PATH=${CSV_FILES_PATH}
       - INTERNET_SPEED=${INTERNET_SPEED}

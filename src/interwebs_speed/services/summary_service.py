@@ -1,6 +1,6 @@
 import csv
 import os
-from datetime import datetime
+from datetime import datetime, timedelta
 
 from interwebs_speed.utils import bytes_to_mb, create_logger, get_config
 from interwebs_speed.services import mail_service
@@ -91,7 +91,13 @@ def send_monthly_summary():
     config = get_config()
     
     csv_files_path = config.get('csv_files_path')
-    file_name = datetime.now().strftime('%m-%Y.csv')
+    
+    # Calculate the date for the previous month
+    today = datetime.now()
+    first_day_of_current_month = today.replace(day=1)
+    last_day_of_previous_month = first_day_of_current_month - timedelta(days=1)
+    file_name = last_day_of_previous_month.strftime('%m-%Y.csv')
+    
     file_path = os.path.join(csv_files_path, file_name)
 
     if not os.path.exists(file_path):
