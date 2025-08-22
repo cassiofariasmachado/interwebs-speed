@@ -54,6 +54,7 @@ jobs:
       with:
         context: .
         file: Dockerfile
+        platforms: "linux/arm/v7"
         push: true
         tags: |
           cassiofariasmachado/interwebs-speed:latest
