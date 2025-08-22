@@ -1,8 +1,9 @@
 {{- if .Values.persistence.enabled -}}
+---
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: pv-standard
+  name: {{ include "interwebs-speed.fullname" . }}-pv
 spec:
   {{- if .Values.persistence.storageClassName }}
   storageClassName: {{ .Values.persistence.storageClassName }}
@@ -17,7 +18,7 @@ spec:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: {{ include "interwebs-speed.fullname" . }}-data
+  name: {{ include "interwebs-speed.fullname" . }}-pvc
   labels:
     {{- include "interwebs-speed.labels" . | nindent 4 }}
 spec:

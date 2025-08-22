@@ -33,6 +33,6 @@ spec:
           volumes:
             - name: data-volume
               persistentVolumeClaim:
-                claimName: {{ include "interwebs-speed.fullname" $ }}-data
+                claimName: {{ include "interwebs-speed.fullname" $ }}-pvc
 {{- end }}
 {{- end }}
