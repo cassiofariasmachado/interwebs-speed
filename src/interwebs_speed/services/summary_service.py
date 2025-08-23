@@ -5,6 +5,7 @@ from datetime import datetime, timedelta
 from interwebs_speed.utils import bytes_to_mb, create_logger, get_config
 from interwebs_speed.services import mail_service
 
+
 def _load_data(file_path: str):
     data = []
     with open(file_path, 'r') as csvfile:
@@ -15,6 +16,7 @@ def _load_data(file_path: str):
             row['ping'] = float(row['ping'])
             data.append(row)
     return data
+
 
 def _get_summary(data):
     if not data:
@@ -40,6 +42,7 @@ def _get_summary(data):
         "max_ping": max(pings),
     }
     return summary
+
 
 def _to_html(summary):
     html = f"""
@@ -85,19 +88,29 @@ def _to_html(summary):
     """
     return html
 
-def send_monthly_summary():
+
+def _get_data_summary(previous_month: bool):
+    today = datetime.now()
+
+    if not previous_month:
+        return today
+
+    first_day_of_current_month = today.replace(day=1)
+    last_day_of_previous_month = first_day_of_current_month - timedelta(days=1)
+
+    return last_day_of_previous_month
+
+
+def send_monthly_summary(previous_month: bool = False):
     logger = create_logger()
     logger.info("Starting monthly summary.")
     config = get_config()
-    
+
     csv_files_path = config.get('csv_files_path')
-    
-    # Calculate the date for the previous month
-    today = datetime.now()
-    first_day_of_current_month = today.replace(day=1)
-    last_day_of_previous_month = first_day_of_current_month - timedelta(days=1)
-    file_name = last_day_of_previous_month.strftime('%m-%Y.csv')
-    
+
+    date = _get_data_summary(previous_month)
+    file_name = date.strftime('%m-%Y.csv')
+
     file_path = os.path.join(csv_files_path, file_name)
 
     if not os.path.exists(file_path):
@@ -108,5 +121,6 @@ def send_monthly_summary():
     summary = _get_summary(data)
     html_summary = _to_html(summary)
 
-    mail_service.send_email(config, "Internet Speed Monthly Summary", html_summary, subtype="html")
+    mail_service.send_email(
+        config, "Internet Speed Monthly Summary", html_summary, subtype="html")
     logger.info("Monthly summary sent.")

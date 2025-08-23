@@ -20,8 +20,15 @@ def analize_command() -> None:
 
 
 @app.command(name="summary")
-def summary_command() -> None:
-    summary_service.send_monthly_summary()
+def summary_command(
+    previous_month: bool = typer.Option(
+        False,
+        "--previous-month",
+        "-p",
+        help="Send the summary of the previous month.",
+    )
+) -> None:
+    summary_service.send_monthly_summary(previous_month)
 
 
 @app.callback()

@@ -11,6 +11,7 @@ kubectl run -i --rm --tty interwebs-speed \
       "containers": [{
         "name": "interwebs-speed",
         "image": "cassiofariasmachado/interwebs-speed:latest",
+        "imagePullPolicy": "Always",
         "command": ["/bin/sh"],
         "stdin": true,
         "stdinOnce": true,
