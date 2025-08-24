@@ -117,10 +117,11 @@ def send_monthly_summary(previous_month: bool = False):
         logger.error(f"File {file_path} not found.")
         return
 
+    subject = f"Internet Speed Monthly Summary - {date.strftime('%m-%Y')}"
     data = _load_data(file_path)
     summary = _get_summary(data)
     html_summary = _to_html(summary)
 
     mail_service.send_email(
-        config, "Internet Speed Monthly Summary", html_summary, subtype="html")
+        config, subject, html_summary, subtype="html")
     logger.info("Monthly summary sent.")
