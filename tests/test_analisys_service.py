@@ -12,7 +12,6 @@ def mocks():
             patch('interwebs_speed.services.analisys_service.mail_service') as mock_mail_service, \
             patch('interwebs_speed.services.analisys_service.format_csv_line') as mock_format_csv_line:
 
-        # Configuração padrão
         mock_get_config.return_value = {
             'csv_files_path': '/tmp',
             'expected_download': 90.0,

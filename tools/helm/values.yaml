@@ -14,7 +14,7 @@ cronjobs:
 
   hourly-analysis:
     enabled: true
-    schedule: "0 * * * *" # At minute 0 past every hour
+    schedule: "*/30 * * * *" # At minute 0 past every hour
     command: ["python", "-m", "interwebs_speed", "analyze"]
 
 persistence:

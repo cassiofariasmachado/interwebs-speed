@@ -2,11 +2,8 @@
 
 source .env
 
-echo '🛑 uninstall helm'
-helm uninstall interwebs-speed | true
-
 echo '✅ install helm'
-helm install interwebs-speed tools/helm/interwebs-speed \
+helm install interwebs-speed tools/helm \
     --set-string configs.CSV_FILES_PATH="${CSV_FILES_PATH}" \
     --set-string configs.INTERNET_SPEED="${INTERNET_SPEED}" \
     --set-string configs.EXPECTED_DOWNLOAD="${EXPECTED_DOWNLOAD}" \
