@@ -15,9 +15,9 @@ def analysis_instance(mock_datetime):
     return Analysis(download=80.0, upload=8.0, ping=5.0)
 
 def test_analysis_init(analysis_instance, mock_datetime):
-    assert analysis_instance.download == 80.0
-    assert analysis_instance.upload == 8.0
-    assert analysis_instance.ping == 5.0
+    assert analysis_instance.download == pytest.approx(80.0)
+    assert analysis_instance.upload == pytest.approx(8.0)
+    assert analysis_instance.ping == pytest.approx(5.0)
     assert analysis_instance.date == mock_datetime.now.return_value
 
 def test_is_under_expected_true(analysis_instance):

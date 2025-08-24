@@ -74,5 +74,5 @@ def test_mb_to_bytes():
 
 def test_bytes_to_mb():
     assert bytes_to_mb(1000000) == 1
-    assert bytes_to_mb(1500000) == 1.5
+    assert bytes_to_mb(1500000) == pytest.approx(1.5)
     assert bytes_to_mb(0) == 0

@@ -1,5 +1,3 @@
-from datetime import datetime
-
 from interwebs_speed import __app_name__, __version__, cli
 
 

@@ -1,8 +1,6 @@
 from interwebs_speed import __app_name__, __version__
 import typer
-
 from typing import Optional
-
 from interwebs_speed.services import analisys_service, summary_service
 
 app = typer.Typer()

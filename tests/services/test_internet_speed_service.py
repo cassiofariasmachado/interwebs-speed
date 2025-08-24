@@ -25,4 +25,4 @@ def test_get_internet_speed(mock_speedtest):
     assert isinstance(analysis, Analysis)
     assert analysis.download == 100000000
     assert analysis.upload == 50000000
-    assert analysis.ping == 10.0
+    assert analysis.ping == pytest.approx(10.0)

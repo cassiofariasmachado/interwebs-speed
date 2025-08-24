@@ -1,7 +1,4 @@
-
-
 from datetime import datetime
-
 from interwebs_speed.utils import bytes_to_mb
 
 

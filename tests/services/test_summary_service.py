@@ -110,8 +110,8 @@ def test_load_data_success(mock_open_file, mock_dict_reader, mocks):
     mock_open_file.assert_called_once_with(file_path, 'r')
     mock_dict_reader.assert_called_once_with(mock_open_file())
     assert len(data) == 2
-    assert data[0]['download'] == 100.0
-    assert data[1]['upload'] == 60.0
+    assert data[0]['download'] == pytest.approx(100.0)
+    assert data[1]['upload'] == pytest.approx(60.0)
 
 @patch('builtins.open', side_effect=FileNotFoundError)
 def test_load_data_file_not_found(mock_file, mocks):
@@ -138,9 +138,9 @@ def test_get_summary_with_data():
     assert summary["avg_download"] == pytest.approx(150.0)
     assert summary["avg_upload"] == pytest.approx(55.0)
     assert summary["avg_ping"] == pytest.approx(11.0)
-    assert summary["min_download"] == 100.0
-    assert summary["max_upload"] == 60.0
-    assert summary["max_ping"] == 12.0
+    assert summary["min_download"] == pytest.approx(100.0)
+    assert summary["max_upload"] == pytest.approx(60.0)
+    assert summary["max_ping"] == pytest.approx(12.0)
 
 # Tests for _to_html
 @patch('interwebs_speed.services.summary_service.bytes_to_mb')

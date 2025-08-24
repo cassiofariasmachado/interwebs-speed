@@ -1,5 +1,3 @@
-
-
 import os
 from interwebs_speed.services import file_service, internet_speed_service, mail_service
 from interwebs_speed.utils import create_logger, format_csv_line, get_config
