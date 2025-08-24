@@ -77,6 +77,23 @@ def test_analyze_normal(mocks):
     assert 2 == len(args[1])
 
 
+def test_analyze_file_exists(mocks):
+    mocks['mock_analysis'].is_under_expected.return_value = False
+    mocks['mock_file_service'].exists.return_value = True
+
+    analyze()
+
+    mocks['mock_logger'].info.assert_any_call(
+        'Download and upload are normal.')
+    mocks['mock_mail_service'].send_email.assert_not_called()
+    mocks['mock_file_service'].save_csv.assert_called_once()
+
+    args, _kwargs = mocks['mock_file_service'].save_csv.call_args
+
+    assert 'download,upload,ping,date' not in args[1]
+    assert 1 == len(args[1])
+
+
 def test_analyze_exception(mocks):
     mocks['mock_file_service'].save_csv.side_effect = Exception('fail')
 

@@ -18,6 +18,7 @@ packages = [{include = "interwebs_speed", from = "src"}]
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^8.3.5"
+pytest-cov = "^5.0.0"
 
 [tool.poetry.scripts]
 interwebs-speed = "interwebs_speed.cli:app"
