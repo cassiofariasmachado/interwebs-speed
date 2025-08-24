@@ -9,14 +9,13 @@ image:
 cronjobs:
   monthly-summary:
     enabled: true
-    # schedule: "*/1 * * * *" # Every minute
     schedule: "0 0 1 * *" # Every first day of the month at midnight (application should process previous month's data)
-    command: ["poetry", "run", "python", "-m", "interwebs_speed", "summary"]
+    command: ["python", "-m", "interwebs_speed", "summary", "--previous-month"]
+
   hourly-analysis:
     enabled: true
-    # schedule: "*/1 * * * *" # Every minute
     schedule: "0 * * * *" # At minute 0 past every hour
-    command: ["poetry", "run", "python", "-m", "interwebs_speed", "analyze"]
+    command: ["python", "-m", "interwebs_speed", "analyze"]
 
 persistence:
   enabled: true
